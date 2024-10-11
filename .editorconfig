@@ -1,0 +1,28 @@
+# EditorConfig helps developers define and maintain consistent
+# coding styles between different editors and IDEs
+# editorconfig.org
+# https://learn.microsoft.com/en-us/dotnet/fundamentals/code-analysis/code-style-rule-options
+
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+indent_style = space
+tab_width = 2
+indent_size = 2
+max_line_length = 100
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.md]
+trim_trailing_whitespace = false
+max_line_length = off
+indent_size = 4
+
+# Windows files
+[*.bat]
+end_of_line = crlf
+
+[*.cmd]
+end_of_line = crlf
