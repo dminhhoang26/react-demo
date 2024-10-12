@@ -12,36 +12,15 @@ import { Provider } from 'react-redux';
 import { signinChallengeStore } from '@/stores/signin-challenge-store';
 
 export default function HomeScreen() {
-  // const [webRes, setWebRes] = useState<WebBrowser.WebBrowserAuthSessionResult | null>(null)
   const defaultScheme = 'sis.parentportal.mobile'
   const packageName = 'com.fxd.parentportal'
 
   const deepLinkUrl = Linking.useURL()
-  // if (deepLinkUrl !== null && deepLinkUrl !== undefined) {
-  //   console.log('deepLinkUrl: !== null', deepLinkUrl)
-  // }
-  // console.log('deepLinkUrl: ', deepLinkUrl)
-  // const goToLogin = () => {
-  //   const url = 'https://localhost:44335/connect/authorize'
-  //   await Linking.canOpenURL(url) && Linking.openURL(url)
-  // }
-  // const url = `https://localhost:44335/connect/authorize&client-id=Sis_ParentPortal_Mobile&response_type=code&code_challenge=${challenge.codeChallenge}`
-  // const goToLogin = useCallback(async () => {
-  //   if ( await Linking.canOpenURL(url)) {
-  //     // let res = await Linking.openURL(url)
-  //     const res = await WebBrowser.openAuthSessionAsync(
-  //       url ?? "",
-  //       Linking.createURL('')
-  //     )
-  //     // setWebRes(res)
-  //     console.log('WebBrowser.openAuthSessionAsync res: ', res)
-  //   }
-  // }, [url])
-  // console.log('tabs Linking.createURL() ', Linking.createURL(''))
+
   return (
     <>
       <SafeAreaView style={{...styles.AndroidSafeArea, backgroundColor: "#CCF7E1"}}>
-        <View style={styles.straigth}>
+        <ThemedView style={styles.straigth}>
           <Link href={{ pathname: 'sis.parentportal.mobile://sign-in/', params: {msg: 'hello from tabs'} }} replace style={{marginTop: 16}}>
             {/* <Pressable> */}
                 <Text>Go to Start</Text>
@@ -49,8 +28,8 @@ export default function HomeScreen() {
           </Link>
           {/* <Button onPress={() => router.replace("sis.parentportal.mobile://start/?")} title='Go to screen'></Button> */}
           {/* <Text>{webRes ? JSON.stringify(webRes) : ""}</Text> */}
-          <Text>{deepLinkUrl}</Text>
-        </View>
+          <ThemedText>{deepLinkUrl}</ThemedText>
+        </ThemedView>
       </SafeAreaView>
     </>
   );

@@ -13,6 +13,7 @@ const signinSlice = createSlice({
       if (!state.codeVerifier) {
         state.codeChallenge = action.payload.codeChallenge
         state.codeVerifier = action.payload.codeVerifier
+        console.log(`signinChallengeCreate `, state.codeChallenge,state.codeVerifier)
       }
     },
     signinChallengeClear: (state) => {
@@ -20,6 +21,7 @@ const signinSlice = createSlice({
       if (state.codeVerifier) {
         state.codeChallenge = null
         state.codeVerifier = null
+        console.log(`signinChallengeClear `, state.codeChallenge,state.codeVerifier)
       }
     },
   }
