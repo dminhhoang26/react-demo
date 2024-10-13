@@ -4,7 +4,6 @@ import * as Linking from 'expo-linking'
 import { Link, router, Stack, useNavigation } from 'expo-router'
 import { EventListenerCallback, EventMapCore } from '@react-navigation/native'
 import * as ExpoWebBrowser from "expo-web-browser"
-import  pkceChallenge  from 'react-native-pkce-challenge'
 import { ThemedText } from '@/components/ThemedText'
 import { useRouteInfo } from 'expo-router/build/hooks'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,7 +12,6 @@ import { SigninChallengeState } from '@/stores/states/signin-challenge'
 import generateRandomBytes from 'react-native-pkce-challenge/src/generate-random-bytes'
 // import * as PkceUtils from 'react-native-pkce-challenge/src/utils'
 import { generateChallenge, verifyChallenge, base64UrlEncode } from 'react-native-pkce-challenge/src/utils'
-// import {generateVerifier} from 'react-native-pkce-challenge/src/pkce-challenge'
 
 export default function SignIn() {
   const defaultScheme = 'sis.parentportal.mobile'
@@ -73,7 +71,6 @@ export default function SignIn() {
   const goToSignin = async () => {
     const codeVerifier = base64UrlEncode(generateRandomBytes().slice(0,32))
     const codeChallenge = generateChallenge(codeVerifier)
-    const newChallenge: SigninChallengeState = pkceChallenge()
     dispatchSiginChallenge(signinChallengeCreate({codeVerifier, codeChallenge}))
     // dispatchSiginChallenge(signinChallengeCreate(newChallenge))
     // dispatchSiginChallenge(signinChallengeCreate({codeChallenge: '0Z3ch4ekmDJRtBKg1D-7qRboYiDS9XTTbFs42iIZ8rQ', codeVerifier: 'obJ8q4iniNbuSa4bkWVrqinakiJ9VZRJeyJnJ7wCXIQQTJNPXZEu7dJvxON8eKxRYtbUP9CKR3jWXT6'}))

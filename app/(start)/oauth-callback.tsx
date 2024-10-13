@@ -28,7 +28,7 @@ export default function OAuthCallback() {
   useEffect(() => {
     (async () => {
       const callbackParams = urlObj.params
-      console.log('OAuthCallback useRouteInfo()', urlObj,  callbackParams['code'])
+      console.log('OAuthCallback useRouteInfo()', urlObj, callbackParams['code'])
       if (!callbackParams['code'] || !siginCodeVerifier) return
       const requestUrl = `${webBaseUrl}/connect/token`
 
@@ -60,9 +60,9 @@ export default function OAuthCallback() {
           data: formBody,
           method: "POST",
           headers: {
-              "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
-              // "Content-Type": "multipart/form-data",
-              "Accept": "application/json"
+            "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8",
+            // "Content-Type": "multipart/form-data",
+            "Accept": "application/json"
           }
         })
         let data = res?.data
@@ -71,17 +71,6 @@ export default function OAuthCallback() {
           setAccessToken(data['access_token'])
           setRefrestToken(data['refresh_token'])
 
-          let check = await axios.request({
-            url: webBaseUrl+'/connect/userinfo',
-            method: 'get',
-            headers: {
-              'Authorization': `Bearer ${accessToken}`
-            }
-          })
-          if (check?.data)
-            console.log('connect/userinfo data: ', JSON.stringify(check?.data ?? {}, null, 2))
-          else
-            console.log(` connect/userinfo res `, check)
         }
       } catch (error) {
         console.log(`OAuthCallback fetch(requestUrl, options) error `, error)
@@ -91,12 +80,35 @@ export default function OAuthCallback() {
     })()
   }, [urlObj])
 
+  useEffect(() => {
+    (async () => {
+      if (accessToken) {
+        try {
+          let check = await axios.request({
+            url: webBaseUrl + '/connect/userinfo',
+            method: 'GET',
+            headers: {
+              'Authorization': `Bearer ${accessToken}`
+            }
+          })
+          if (check?.data)
+            console.log('connect/userinfo data: ', JSON.stringify(check?.data ?? {}, null, 2))
+          else
+            console.log(` connect/userinfo res `, check)
+        } catch (error) {
+          console.log(`check user info error `, JSON.stringify(error, null, 2))
+          console.log(`check user info error raw `, error)
+        }
+      }
+    })()
+  }, [accessToken])
+
   return (
-    <ThemedView style={{flex: 1, alignItems: 'center', justifyContent: 'center', padding: 8}} >
-      <ScrollView>
-        <ThemedText>{ JSON.stringify(urlObj?.params, null, 2) ?? 'null'}</ThemedText>
+    <ThemedView style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }} >
+      <ScrollView style={{padding: 8}}>
+        <ThemedText>{JSON.stringify(urlObj?.params, null, 2) ?? 'null'}</ThemedText>
         <ThemedText>{siginCodeVerifier ?? 'codeVerifier null'}</ThemedText>
-        <ThemedText style={{marginBottom: 32}}>{accessToken ?? 'accessToken null'}</ThemedText>
+        <ThemedText style={{ marginBottom: 32 }}>{accessToken ?? 'accessToken null'}</ThemedText>
         <ThemedText>{refreshToken ?? 'refreshToken null'}</ThemedText>
       </ScrollView>
     </ThemedView>
